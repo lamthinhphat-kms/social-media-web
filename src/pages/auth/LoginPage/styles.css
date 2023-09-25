@@ -1,0 +1,23 @@
+.container {
+    display: flex;
+    /* background-color: red; */
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.login_container {
+    padding: 32px 0px;
+    width: 60%;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    border: 1px solid gray;
+}
+
+.default_component {
+    width: 70%;
+    margin-bottom: 12px;
+    
+}
