@@ -18,7 +18,6 @@ function HomePage() {
     queryKey: ["following-list", user?.id],
     queryFn: () => FollowingService.fetchFollowingList(user?.id!),
     onSuccess: (data) => {
-      console.log("following list", data);
       fetchPostFeedFollowingQuery.mutate(data);
     },
   });

@@ -20,7 +20,7 @@ const SideNav: React.FC = () => {
 
   return (
     <Layout hasSider>
-      <Sider style={{ height: "100vh" }}>
+      <Sider style={{ height: "100vh" }} breakpoint="lg" collapsedWidth="0">
         <div
           style={{
             display: "flex",
@@ -33,6 +33,7 @@ const SideNav: React.FC = () => {
             theme="dark"
             mode="inline"
             defaultSelectedKeys={[window.location.pathname]}
+            selectedKeys={[window.location.pathname]}
             style={{ display: "flex", flexDirection: "column", height: "100%" }}
             items={[
               {
@@ -40,7 +41,6 @@ const SideNav: React.FC = () => {
                 icon: <HomeOutlined />,
                 label: "Home",
                 onClick: () => {
-                  console.log("123");
                   navigate("/");
                 },
               },

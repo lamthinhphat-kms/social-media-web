@@ -1,0 +1,40 @@
+.ant-modal .ant-modal-content {
+    padding: 0px;
+}
+
+.left_container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    background-color: black;
+}
+
+.right_container{
+    max-height: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    aspect-ratio: 1;
+  }
+
+.ant-card .ant-card-meta-description {
+    color: black
+}
+
+
+.comment_section {
+    display: flex;
+    flex-direction: column;
+}
+
+.input_comment {
+    flex: 1;
+}
