@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import "./CommentTile.css";
 import { IComment } from "../../models/IComment";
 import { Avatar, Typography } from "antd";
@@ -47,4 +47,4 @@ function CommentTile(props: CommentTileProps) {
   );
 }
 
-export default CommentTile;
+export default memo(CommentTile);

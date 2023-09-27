@@ -1,7 +1,6 @@
 import { Modal, Typography, Card, Avatar, Input, Divider } from "antd";
-import React, { memo, useContext, useEffect, useState } from "react";
+import { memo, useContext, useState } from "react";
 import { IPost } from "../../models/IPost";
-import Meta from "antd/es/card/Meta";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import CommentService from "../../api/CommentService";
 import CommentTile from "../CommentTile/CommentTile";
@@ -13,12 +12,13 @@ import { AuthContext } from "../../context/AuthContext";
 const { Text } = Typography;
 
 type CommentModalProps = {
-  isLiked: boolean;
+  isLiked?: boolean;
   open: boolean;
   handleCancel: () => void;
   post: IPost;
-  onLike: () => void;
-  onUnlike: () => void;
+  onLike?: () => void;
+  onUnlike?: () => void;
+  isMyPost?: boolean;
 };
 function CommentModal(props: CommentModalProps) {
   const { post } = props;
@@ -40,6 +40,8 @@ function CommentModal(props: CommentModalProps) {
       });
     },
   });
+  console.log(post.users?.id);
+  console.log(post.users?.avatar);
 
   const [comment, setComment] = useState("");
   return (
@@ -107,7 +109,7 @@ function CommentModal(props: CommentModalProps) {
                   margin: "4px",
                 }}
               />
-              {fetchCommentsQuery.data?.map((item, index) => {
+              {fetchCommentsQuery.data?.map((item) => {
                 return <CommentTile key={item.id} comment={item} />;
               })}
             </Card>
@@ -126,14 +128,19 @@ function CommentModal(props: CommentModalProps) {
                 alignItems: "center",
               }}
             >
-              {props.isLiked ? (
-                <HeartFilled
-                  className="icon_click liked"
-                  onClick={props.onUnlike}
-                />
-              ) : (
-                <HeartOutlined className="icon_click" onClick={props.onLike} />
-              )}
+              {!props.isMyPost ? (
+                props.isLiked ? (
+                  <HeartFilled
+                    className="icon_click liked"
+                    onClick={props.onUnlike}
+                  />
+                ) : (
+                  <HeartOutlined
+                    className="icon_click"
+                    onClick={props.onLike}
+                  />
+                )
+              ) : undefined}
 
               <Text className="like_text">
                 {post.likes_count} likes ∙ {moment(post.created_at).fromNow()}

@@ -1,20 +1,21 @@
-import { Route, Routes } from "react-router-dom";
-import SearchPage from "../pages/main/SearchPage/SearchPage";
+import { Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "../pages/main/HomePage/HomePage";
 import ProfilePage from "../pages/main/ProfilePage/ProfilePage";
 import UploadPage from "../pages/main/UploadPage/UploadPage";
+import { useMemo } from "react";
 
 function MainRoutes() {
+  const { pathname } = useLocation();
+  const key = useMemo(() => {
+    return pathname.split("/").pop();
+  }, [pathname]);
   return (
-    <div>
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
-        <Route path="/upload" element={<UploadPage />} />
-        <Route path="/*" element={<h1>Error</h1>} />
-      </Routes>
-    </div>
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/profile/:id" element={<ProfilePage key={key} />} />
+      <Route path="/upload" element={<UploadPage />} />
+      <Route path="/*" element={<h1>Error</h1>} />
+    </Routes>
   );
 }
 

@@ -1,0 +1,13 @@
+.search_container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 24px 0px;
+    flex: 1;
+    gap: 8px;
+}
+
+.input_search_container {
+    margin: 0px 24px;
+    width: auto;
+}
