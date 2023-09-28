@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 import MainRoutes from "../routes/MainRoutes";
 import { AuthContext } from "../context/AuthContext";
 import SearchPage from "../pages/main/SearchPage/SearchPage";
+import PostModal from "../components/PostModal/PostModal";
+import SearchDrawer from "../components/SearchDrawer/SearchDrawer";
 
 const { Content, Sider } = Layout;
 
@@ -18,10 +20,15 @@ const SideNav: React.FC = () => {
   const navigate = useNavigate();
 
   const { user, logout } = useContext(AuthContext);
-  const [open, setOpen] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openPost, setOpenPost] = useState(false);
 
-  const handleOnClose = useCallback(() => {
-    setOpen(false);
+  const handleOnCloseDrawer = useCallback(() => {
+    setOpenDrawer(false);
+  }, []);
+
+  const handleOnClosePost = useCallback(() => {
+    setOpenPost(false);
   }, []);
 
   return (
@@ -60,7 +67,7 @@ const SideNav: React.FC = () => {
                   icon: <SearchOutlined />,
                   label: "Search",
                   onClick: () => {
-                    setOpen(true);
+                    setOpenDrawer(true);
                   },
                 },
                 {
@@ -68,7 +75,8 @@ const SideNav: React.FC = () => {
                   icon: <UploadOutlined />,
                   label: "Upload",
                   onClick: () => {
-                    navigate("/upload");
+                    // navigate("/upload");
+                    setOpenPost(true);
                   },
                 },
                 {
@@ -111,17 +119,10 @@ const SideNav: React.FC = () => {
           </Content>
         </Layout>
       </Layout>
-      <Drawer
-        open={open}
-        placement="left"
-        closeIcon={null}
-        onClose={handleOnClose}
-        bodyStyle={{
-          padding: "0px",
-        }}
-      >
-        <SearchPage handleCloseDrawer={handleOnClose} />
-      </Drawer>
+      {openPost && (
+        <PostModal open={openPost} handleCancel={handleOnClosePost} />
+      )}
+      <SearchDrawer open={openDrawer} handleClose={handleOnCloseDrawer} />
     </>
   );
 };

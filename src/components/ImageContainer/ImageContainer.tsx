@@ -22,7 +22,15 @@ function ImageContainer(props: ImageContainerProps) {
           position: "relative",
         }}
       >
-        <Image preview={false} src={`http://${post.image_url}`} />
+        <img
+          style={{
+            width: "100%",
+            height: "100%",
+            aspectRatio: 1,
+            objectFit: "contain",
+          }}
+          src={`http://${post.image_url}`}
+        />
 
         {showImage && (
           <div className="eye_show_image">

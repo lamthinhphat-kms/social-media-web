@@ -1,6 +1,8 @@
+import axios from "axios";
 import { IFollowing } from "../models/IFollowing";
 import { IPost } from "../models/IPost";
 import supabase from "../supabase/supabaseClient";
+import UploadService from "./UploadService";
 
 async function fetchFollowingPost(
   followingIdList: IFollowing[]
@@ -20,6 +22,46 @@ async function fetchFollowingPost(
     }
     return data as IPost[];
   } catch (error) {
+    throw error;
+  }
+}
+
+async function uploadImagePost({
+  blob,
+  caption,
+  userId,
+}: {
+  blob: Blob;
+  caption: string;
+  userId: string;
+}) {
+  try {
+    const resUploadImage = await UploadService.uploadImage(
+      blob,
+      userId,
+      "posts"
+    );
+    const resInsertPost = await supabase.from("posts").insert([
+      {
+        user_id: userId,
+        caption: caption,
+        image_url: resUploadImage.imageUrl,
+      },
+    ]);
+    if (resInsertPost.error) {
+      throw resInsertPost.error;
+    }
+    return resInsertPost.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(
+        "Axios request failed",
+        error.response?.data,
+        error.toJSON()
+      );
+    } else {
+      console.error(error);
+    }
     throw error;
   }
 }
@@ -49,5 +91,6 @@ async function fetchProfilePosts({
 const PostService = {
   fetchFollowingPost,
   fetchProfilePosts,
+  uploadImagePost,
 };
 export default PostService;

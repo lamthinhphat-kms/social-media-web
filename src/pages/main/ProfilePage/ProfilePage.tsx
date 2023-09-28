@@ -35,9 +35,6 @@ function ProfilePage() {
     queryKey: ["user", user?.id],
     queryFn: () => UserService.fetchUserProfile({ userId: profileId! }),
     onSuccess: (data) => {
-      console.log(data.at(0)?.avatar);
-      console.log(data.at(0)?.id);
-
       setProfile(data[0]);
     },
   });

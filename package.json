@@ -11,14 +11,17 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.36.0",
+    "@types/uuid": "^9.0.4",
     "antd": "^5.9.2",
     "axios": "^1.5.0",
     "moment": "^2.29.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-image-crop": "^10.1.8",
     "react-query": "^3.39.3",
     "react-router-dom": "^6.16.0",
     "react-spinners": "^0.13.8",
+    "uuid": "^9.0.1",
     "vite-plugin-require": "^1.1.11"
   },
   "devDependencies": {

@@ -40,8 +40,6 @@ function CommentModal(props: CommentModalProps) {
       });
     },
   });
-  console.log(post.users?.id);
-  console.log(post.users?.avatar);
 
   const [comment, setComment] = useState("");
   return (
@@ -49,6 +47,7 @@ function CommentModal(props: CommentModalProps) {
       open={props.open}
       footer={null}
       onCancel={props.handleCancel}
+      className="comment_modal"
       centered={true}
       afterClose={props.handleCancel}
       closeIcon={false}
