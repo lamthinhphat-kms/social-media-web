@@ -4,3 +4,6 @@
     flex-direction: row;
     gap: 8px;
 }
+.ant-comment-inner {
+    pointer-events: none;
+}

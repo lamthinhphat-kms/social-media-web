@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/compatible": "^5.1.2",
     "@supabase/supabase-js": "^2.36.0",
     "@types/uuid": "^9.0.4",
     "antd": "^5.9.2",
@@ -21,6 +22,7 @@
     "react-query": "^3.39.3",
     "react-router-dom": "^6.16.0",
     "react-spinners": "^0.13.8",
+    "socket.io-client": "^4.7.2",
     "uuid": "^9.0.1",
     "vite-plugin-require": "^1.1.11"
   },

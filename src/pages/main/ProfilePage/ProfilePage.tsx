@@ -1,19 +1,21 @@
-import React, { useContext, useMemo, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import "./ProfilePage.css";
-import { Avatar, Divider, Image, Typography } from "antd";
+import { Avatar, Button, Divider, Typography } from "antd";
 import { useQuery } from "react-query";
 import { AuthContext } from "../../../context/AuthContext";
 import UserService from "../../../api/UserService";
 import { IUser } from "../../../models/IUser";
 import PostService from "../../../api/PostService";
 import ImageContainer from "../../../components/ImageContainer/ImageContainer";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 const { Text } = Typography;
 function ProfilePage() {
   const { user } = useContext(AuthContext);
   const [profile, setProfile] = useState<IUser | undefined>(undefined);
+
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const profileId = useMemo(() => {
     if (id === user?.id) {
@@ -31,8 +33,8 @@ function ProfilePage() {
     }
   }, []);
 
-  const fetchUserQuery = useQuery({
-    queryKey: ["user", user?.id],
+  useQuery({
+    queryKey: ["user", profileId],
     queryFn: () => UserService.fetchUserProfile({ userId: profileId! }),
     onSuccess: (data) => {
       setProfile(data[0]);
@@ -42,8 +44,22 @@ function ProfilePage() {
   const fetchPostQuery = useQuery({
     queryKey: ["posts", user?.id],
     queryFn: () => PostService.fetchProfilePosts({ profileId: profileId! }),
-    onSuccess: (data) => {},
+    onSuccess: (_) => {},
   });
+
+  const handleOnClickMessage = () => {
+    const roomId = [
+      user?.id.substring(0, user.id.indexOf("-")),
+      profileId?.substring(0, profileId.indexOf("-")),
+    ]
+      .sort()
+      .join("");
+    navigate(`/chat/${roomId}`, {
+      state: {
+        currentProfile: profile,
+      },
+    });
+  };
   return (
     <>
       <div className="profile_container">
@@ -63,6 +79,11 @@ function ProfilePage() {
           <div className="info_container">
             <div>
               <Text className="profile_text">{profile?.name}</Text>
+              {!isMyProfile && (
+                <Button type="primary" onClick={handleOnClickMessage}>
+                  Message
+                </Button>
+              )}
             </div>
             <div className="following_statistic">
               <Text className="profile_text">
@@ -84,7 +105,7 @@ function ProfilePage() {
             gridTemplateColumns: "repeat(3,1fr)",
           }}
         >
-          {fetchPostQuery.data?.map((item, index) => (
+          {fetchPostQuery.data?.map((item) => (
             <ImageContainer key={item.id} post={item} />
           ))}
         </div>

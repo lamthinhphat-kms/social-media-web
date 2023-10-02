@@ -1,15 +1,8 @@
-import { Button, Input, Modal } from "antd";
+import { Button, Modal } from "antd";
 import "react-image-crop/dist/ReactCrop.css";
 import "./PostModal.css";
 import SelectImage from "../SelectImage/SelectImage";
-import {
-  memo,
-  useCallback,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { memo, useCallback, useContext, useRef, useState } from "react";
 import { useMutation, useQueryClient } from "react-query";
 import PostService from "../../api/PostService";
 import { AuthContext } from "../../context/AuthContext";
@@ -49,7 +42,7 @@ function PostModal(props: PostModalProps) {
 
   const createPostMutation = useMutation({
     mutationFn: PostService.uploadImagePost,
-    onSuccess: (data) => {
+    onSuccess: (_) => {
       queryClient.invalidateQueries(["posts", user?.id], {
         exact: true,
       });

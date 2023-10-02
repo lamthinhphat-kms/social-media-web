@@ -21,8 +21,6 @@ function SelectImage(props: SelectImageProps) {
   const [completedPreviewCrop, setCompletedPreviewCrop] = useState<PixelCrop>();
   const imageRef = useRef(null);
 
-  console.log("123");
-
   useDebounceEffect(
     async () => {
       if (

@@ -1,6 +1,8 @@
 import React, { FC, createContext, useEffect, useState } from "react";
 import supabase from "../supabase/supabaseClient";
 import { User } from "@supabase/supabase-js";
+import { IUser } from "../models/IUser";
+import UserService from "../api/UserService";
 
 interface AuthContextProps {
   user: User | null;
@@ -29,14 +31,19 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   useEffect(() => {
     // isLoggedIn();
   }, []);
-
   const isLoggedIn = async () => {
-    const { data, error } = await supabase.auth.getUser();
-    if (data.user) {
-      setUser(data.user!);
+    try {
+      const { data, error } = await supabase.auth.getUser();
+      if (data.user) {
+        setUser(data.user!);
+        setIsLoading(false);
+      } else {
+        setIsLoading(false);
+      }
+    } catch (error) {
       setIsLoading(false);
-    } else {
-      setIsLoading(false);
+
+      throw error;
     }
   };
 
@@ -47,7 +54,13 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, isLoading, logout, setUser, isLoggedIn }}
+      value={{
+        user,
+        isLoading,
+        logout,
+        setUser,
+        isLoggedIn,
+      }}
     >
       {children}
     </AuthContext.Provider>
