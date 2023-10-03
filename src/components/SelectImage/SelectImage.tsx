@@ -112,6 +112,7 @@ function SelectImage(props: SelectImageProps) {
                   visibility: !completedPreviewCrop ? "visible" : "hidden",
                   position: "absolute",
                   minWidth: "100%",
+                  maxHeight: "90%",
                 }}
                 keepSelection={true}
                 crop={crop}
