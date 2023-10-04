@@ -128,6 +128,8 @@ function ChatPage() {
                     message: chat,
                     userId: user?.id,
                     roomId: roomId,
+                    toUserId: currentProfile.id,
+                    name: fetchUserQuery.data?.at(0)?.name,
                   });
                 }
               : undefined
