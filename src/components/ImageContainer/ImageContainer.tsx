@@ -1,4 +1,4 @@
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { Image } from "antd";
 import { IPost } from "../../models/IPost";
 import CommentModal from "../CommentModal/CommentModal";
@@ -20,6 +20,7 @@ function ImageContainer(props: ImageContainerProps) {
         style={{
           cursor: "pointer",
           position: "relative",
+          overflowY: "hidden",
         }}
       >
         <img
@@ -43,14 +44,14 @@ function ImageContainer(props: ImageContainerProps) {
           </div>
         )}
       </div>
-      {open && (
+      {/* {open && (
         <CommentModal
           open={open}
           handleCancel={() => setOpen(false)}
           post={post}
           isMyPost={true}
         />
-      )}
+      )} */}
     </>
   );
 }

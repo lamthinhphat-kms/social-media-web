@@ -51,9 +51,9 @@ function CommentModal(props: CommentModalProps) {
       centered={true}
       afterClose={props.handleCancel}
       closeIcon={false}
-      width={"90vw"}
+      width={"60vw"}
       bodyStyle={{
-        height: "70vh",
+        height: "65vh",
       }}
     >
       <div

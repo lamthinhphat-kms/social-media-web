@@ -1,13 +1,15 @@
-import { useContext, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import "./ProfilePage.css";
 import { Avatar, Button, Divider, Typography } from "antd";
-import { useQuery } from "react-query";
+import { useInfiniteQuery, useQuery } from "react-query";
 import { AuthContext } from "../../../context/AuthContext";
 import UserService from "../../../api/UserService";
 import { IUser } from "../../../models/IUser";
 import PostService from "../../../api/PostService";
 import ImageContainer from "../../../components/ImageContainer/ImageContainer";
 import { useNavigate, useParams } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { ClipLoader } from "react-spinners";
 
 const { Text } = Typography;
 function ProfilePage() {
@@ -41,11 +43,34 @@ function ProfilePage() {
     },
   });
 
-  const fetchPostQuery = useQuery({
-    queryKey: ["posts", user?.id],
-    queryFn: () => PostService.fetchProfilePosts({ profileId: profileId! }),
-    onSuccess: (_) => {},
-  });
+  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
+    ["posts", profileId],
+    ({ pageParam }) =>
+      PostService.fetchPostByRange({
+        userId: profileId!,
+        page: pageParam,
+      }),
+    {
+      getNextPageParam: (lastPage, allPages) => {
+        return lastPage.length === 9 ? allPages.length : null;
+      },
+    }
+  );
+
+  useEffect(() => {
+    const root = document.getElementById("scrollableDiv");
+    if (root) {
+      if (!isLoading && hasNextPage && root.scrollHeight <= root.clientHeight) {
+        fetchNextPage();
+      }
+    }
+  }, [isLoading, hasNextPage, data]);
+
+  const posts = useMemo(() => {
+    return data?.pages.reduce((acc, page) => {
+      return [...acc, ...page];
+    }, []);
+  }, [data]);
 
   const handleOnClickMessage = () => {
     const roomId = [
@@ -62,7 +87,7 @@ function ProfilePage() {
   };
   return (
     <>
-      <div className="profile_container">
+      <div className="profile_container" id="scrollableDiv">
         <div className="header_container">
           <div className="ava_container">
             <Avatar
@@ -88,7 +113,7 @@ function ProfilePage() {
             <div className="following_statistic">
               <Text className="profile_text">
                 <Text strong={true} className="profile_text">
-                  {fetchPostQuery.data?.length}
+                  {0}
                 </Text>{" "}
                 posts
               </Text>
@@ -98,16 +123,38 @@ function ProfilePage() {
           </div>
         </div>
         <Divider />
-        <div
-          style={{
-            display: "inline-grid",
-            gap: "4px",
-            gridTemplateColumns: "repeat(3,1fr)",
-          }}
-        >
-          {fetchPostQuery.data?.map((item) => (
-            <ImageContainer key={item.id} post={item} />
-          ))}
+        <div id="scrollableDiv">
+          <InfiniteScroll
+            dataLength={posts ? posts.length : 0}
+            next={() => fetchNextPage()}
+            hasMore={hasNextPage ?? true}
+            loader={
+              <div
+                style={{
+                  flex: 1,
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                }}
+              >
+                <ClipLoader loading={true} />
+              </div>
+            }
+            scrollableTarget="scrollableDiv"
+          >
+            <div
+              style={{
+                display: "inline-grid",
+                gap: "4px",
+                gridTemplateColumns: "repeat(3,1fr)",
+              }}
+            >
+              {posts &&
+                posts.map((item) => (
+                  <ImageContainer key={item.id} post={item} />
+                ))}
+            </div>
+          </InfiniteScroll>
         </div>
       </div>
     </>

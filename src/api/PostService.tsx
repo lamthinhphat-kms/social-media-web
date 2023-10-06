@@ -88,9 +88,68 @@ async function fetchProfilePosts({
   }
 }
 
+async function fetchPostByRange({
+  userId,
+  page = 0,
+}: {
+  userId: string;
+  page: number;
+}): Promise<IPost[]> {
+  try {
+    console.log(page);
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("user_id", userId)
+      .order("created_at", {
+        ascending: false,
+      })
+      .range(page * 9, (page + 1) * 9 - 1);
+    if (error) {
+      throw error;
+    }
+    return data as IPost[];
+  } catch (error) {
+    throw error;
+  }
+}
+
+async function fetchFollowingPostFromRange({
+  followingIdList,
+  page = 0,
+}: {
+  followingIdList: IFollowing[];
+  page: number;
+}): Promise<IPost[]> {
+  try {
+    console.log(page);
+    if (followingIdList.length !== 0) {
+      const { data, error } = await supabase
+        .from("posts")
+        .select("*,users(name,avatar,updated_at)")
+        .in("user_id", [
+          ...followingIdList.map((following) => following.following_id),
+        ])
+        .order("created_at", {
+          ascending: false,
+        })
+        .range(page * 8, (page + 1) * 8 - 1);
+      if (error) {
+        throw error;
+      }
+      return data as IPost[];
+    }
+    return [];
+  } catch (error) {
+    throw error;
+  }
+}
+
 const PostService = {
   fetchFollowingPost,
   fetchProfilePosts,
   uploadImagePost,
+  fetchFollowingPostFromRange,
+  fetchPostByRange,
 };
 export default PostService;

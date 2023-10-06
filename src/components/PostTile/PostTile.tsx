@@ -76,11 +76,13 @@ function PostTile(props: PostTileProps) {
           }
           title={post.users?.name}
         />
-        <Image
+        <img
           style={{
             aspectRatio: 1,
+            objectFit: "contain",
+            height: "100%",
+            width: "100%",
           }}
-          preview={false}
           src={`http://${post.image_url}`}
         />
 
