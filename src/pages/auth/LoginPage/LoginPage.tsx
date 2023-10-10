@@ -26,6 +26,8 @@ function LoginPage() {
   return (
     <div className="container">
       <Lottie
+        loop
+        play
         animationData={require("../../../../public/animations/social-media.json")}
         style={{
           width: "40%",

@@ -99,7 +99,7 @@ async function fetchPostByRange({
     console.log(page);
     const { data, error } = await supabase
       .from("posts")
-      .select("*")
+      .select("*,users(name,avatar)")
       .eq("user_id", userId)
       .order("created_at", {
         ascending: false,
