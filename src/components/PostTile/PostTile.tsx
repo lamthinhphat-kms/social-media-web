@@ -1,6 +1,6 @@
-import { Card, Avatar, Image, Typography, Modal } from "antd";
+import { Card, Avatar, Typography } from "antd";
 import Meta from "antd/es/card/Meta";
-import React, { memo, useContext, useState } from "react";
+import { memo, useContext, useEffect, useRef, useState } from "react";
 import { IPost } from "../../models/IPost";
 import { HeartOutlined, CommentOutlined, HeartFilled } from "@ant-design/icons";
 import "./PostTile.css";
@@ -9,6 +9,7 @@ import LikeService from "../../api/LikeService";
 import { AuthContext } from "../../context/AuthContext";
 import CommentModal from "../CommentModal/CommentModal";
 import moment from "moment";
+import Lottie from "react-lottie-player";
 
 const { Text, Paragraph } = Typography;
 
@@ -36,6 +37,8 @@ function PostTile(props: PostTileProps) {
     },
   });
 
+  const [play, setPlay] = useState(false);
+
   const createDeleteLikeMutation = useMutation({
     mutationFn: LikeService.deleteikePost,
     onSuccess: (data) => {
@@ -48,12 +51,15 @@ function PostTile(props: PostTileProps) {
     },
   });
 
+  const isFirstRun = useRef(false);
+
   useQuery({
     queryKey: ["like", post.id, user?.id],
     queryFn: () =>
       LikeService.fetchIsLike({ postId: post.id, userId: user?.id! }),
     onSuccess: (data) => {
       setIsLiked(data.length !== 0);
+      setPlay(true);
     },
   });
 
@@ -87,7 +93,7 @@ function PostTile(props: PostTileProps) {
         />
 
         <div className="icon_container">
-          {isLiked ? (
+          {/* {isLiked ? (
             <HeartFilled
               className="icon_click liked"
               onClick={() => {
@@ -107,7 +113,33 @@ function PostTile(props: PostTileProps) {
                 });
               }}
             />
-          )}
+          )} */}
+
+          <Lottie
+            segments={isLiked ? [0, 80] : [80, 181]}
+            onClick={
+              isLiked
+                ? () => {
+                    createDeleteLikeMutation.mutate({
+                      postId: post.id,
+                      userId: user?.id!,
+                    });
+                  }
+                : () => {
+                    createInsertLikeMutation.mutate({
+                      postId: post.id,
+                      userId: user?.id!,
+                    });
+                  }
+            }
+            play={play}
+            onComplete={() => setPlay(false)}
+            style={{
+              width: "70px",
+            }}
+            animationData={require("../../../public/animations/like.json")}
+            loop={false}
+          />
 
           <CommentOutlined
             className="icon_click"

@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import "./styles.css";
 import { Button, Input } from "antd";
 import { useMutation } from "react-query";
@@ -6,6 +6,7 @@ import AuthService from "../../../api/AuthService";
 import { AuthContext } from "../../../context/AuthContext";
 import { Typography } from "antd";
 import { Link } from "react-router-dom";
+import Lottie from "react-lottie-player";
 
 const { Text } = Typography;
 
@@ -24,6 +25,12 @@ function LoginPage() {
 
   return (
     <div className="container">
+      <Lottie
+        animationData={require("../../../../public/animations/social-media.json")}
+        style={{
+          width: "40%",
+        }}
+      />
       <div className="login_container">
         <h1 style={{ marginBottom: "12px" }}>Social Media</h1>
         <Input

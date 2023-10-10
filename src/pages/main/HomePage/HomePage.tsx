@@ -6,18 +6,22 @@ import FollowingService from "../../../api/FollowingService";
 import PostService from "../../../api/PostService";
 import { ClipLoader } from "react-spinners";
 import InfiniteScroll from "react-infinite-scroll-component";
+import { Card, Skeleton } from "antd";
 
 function HomePage() {
   const { user } = useContext(AuthContext);
   const fetchFollowingListQuery = useQuery({
     queryKey: ["following-list", user?.id],
     queryFn: () => FollowingService.fetchFollowingList(user?.id!),
+    onSuccess: () => {
+      postFollowingInfiniteQuery.refetch();
+    },
   });
   const followingList = useMemo(() => {
     return fetchFollowingListQuery.data;
   }, [fetchFollowingListQuery.data]);
 
-  const { data, isLoading, hasNextPage, fetchNextPage } = useInfiniteQuery(
+  const postFollowingInfiniteQuery = useInfiniteQuery(
     ["postsFollowing", followingList],
     ({ pageParam }) =>
       PostService.fetchFollowingPostFromRange({
@@ -34,17 +38,25 @@ function HomePage() {
   useEffect(() => {
     const root = document.getElementById("scrollableDiv");
     if (root) {
-      if (!isLoading && hasNextPage && root.scrollHeight <= root.clientHeight) {
-        fetchNextPage();
+      if (
+        !postFollowingInfiniteQuery.isLoading &&
+        postFollowingInfiniteQuery.hasNextPage &&
+        root.scrollHeight <= root.clientHeight
+      ) {
+        postFollowingInfiniteQuery.fetchNextPage();
       }
     }
-  }, [isLoading, hasNextPage, data]);
+  }, [
+    postFollowingInfiniteQuery.isLoading,
+    postFollowingInfiniteQuery.hasNextPage,
+    postFollowingInfiniteQuery.data,
+  ]);
 
   const posts = useMemo(() => {
-    return data?.pages.reduce((acc, page) => {
+    return postFollowingInfiniteQuery.data?.pages.reduce((acc, page) => {
       return [...acc, ...page];
     }, []);
-  }, [data]);
+  }, [postFollowingInfiniteQuery.data]);
 
   if (fetchFollowingListQuery.isLoading) {
     return (
@@ -72,19 +84,45 @@ function HomePage() {
     >
       <InfiniteScroll
         dataLength={posts ? posts.length : 0}
-        next={() => fetchNextPage()}
-        hasMore={hasNextPage ?? true}
+        next={() => postFollowingInfiniteQuery.fetchNextPage()}
+        hasMore={postFollowingInfiniteQuery.hasNextPage ?? true}
         loader={
-          <div
+          <Card
             style={{
-              flex: 1,
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
+              marginBottom: "12px",
+            }}
+            bodyStyle={{
+              padding: "0",
             }}
           >
-            <ClipLoader loading={true} />
-          </div>
+            <div
+              style={{
+                padding: "16px 16px 12px",
+              }}
+            >
+              <Skeleton avatar paragraph={{ rows: 0 }} active />
+            </div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "8px",
+              }}
+            >
+              <Skeleton.Image
+                style={{ width: "35vw", height: "40vh" }}
+                active
+              />
+            </div>
+
+            <Skeleton
+              style={{
+                padding: "8px 16px",
+              }}
+              paragraph={{ rows: 2 }}
+              active
+            />
+          </Card>
         }
         scrollableTarget="scrollableDiv"
       >

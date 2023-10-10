@@ -145,11 +145,27 @@ async function fetchFollowingPostFromRange({
   }
 }
 
+async function fetchPostLength(userId: string): Promise<number | null> {
+  try {
+    const { data, count, error } = await supabase
+      .from("posts")
+      .select("*", { count: "exact" })
+      .eq("user_id", userId)
+      .order("created_at", {
+        ascending: false,
+      });
+    return count;
+  } catch (error) {
+    throw error;
+  }
+}
+
 const PostService = {
   fetchFollowingPost,
   fetchProfilePosts,
   uploadImagePost,
   fetchFollowingPostFromRange,
   fetchPostByRange,
+  fetchPostLength,
 };
 export default PostService;

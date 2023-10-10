@@ -1,0 +1,14 @@
+.ant-skeleton {
+    .ant-skeleton-element {
+        color: red;
+    }
+}
+:where(.css-dev-only-do-not-override-1vr7spz)
+{
+    .ant-skeleton
+    {
+        .ant-skeleton-element {
+            color: red;!important
+        }
+    }
+}

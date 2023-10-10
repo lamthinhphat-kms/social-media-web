@@ -44,14 +44,14 @@ function ImageContainer(props: ImageContainerProps) {
           </div>
         )}
       </div>
-      {/* {open && (
+      {open && (
         <CommentModal
           open={open}
           handleCancel={() => setOpen(false)}
           post={post}
           isMyPost={true}
         />
-      )} */}
+      )}
     </>
   );
 }
