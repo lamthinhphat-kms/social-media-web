@@ -1,5 +1,4 @@
 import { Drawer } from "antd";
-import React from "react";
 import SearchPage from "../../pages/main/SearchPage/SearchPage";
 
 type SearchDrawerProps = {

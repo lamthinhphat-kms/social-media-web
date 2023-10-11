@@ -1,17 +1,18 @@
-import { useContext, useEffect, useState } from "react";
-import { IMessage } from "../../../models/IMessage";
-import { useLocation, useParams } from "react-router-dom";
-import { socket } from "../../../utils/Socket";
-import { Avatar, Input, Typography } from "antd";
-import { IUser } from "../../../models/IUser";
-import { useQuery } from "react-query";
-import { AuthContext } from "../../../context/AuthContext";
-import UserService from "../../../api/UserService";
-import.meta.env;
-import "./ChatPage.css";
-import ChatTile from "../../../components/ChatTile/ChatTile";
 import { SendOutlined } from "@ant-design/icons";
+import { Avatar, Input, Typography } from "antd";
+import { useContext, useEffect, useState } from "react";
+import { useQuery } from "react-query";
+import { useLocation, useParams } from "react-router-dom";
+import UserService from "../../../api/UserService";
+import ChatTile from "../../../components/ChatTile/ChatTile";
+import { AuthContext } from "../../../context/AuthContext";
+import { IMessage } from "../../../models/IMessage";
+import { IUser } from "../../../models/IUser";
+import { defaultAva } from "../../../res";
 import AlwaysScrollToBottom from "../../../utils/AlwaysScrollToBottom";
+import { socket } from "../../../utils/Socket";
+import "./ChatPage.css";
+import.meta.env;
 
 const { Text } = Typography;
 
@@ -72,7 +73,7 @@ function ChatPage() {
                     ? `?cache=${currentProfile.updated_at}`
                     : ""
                 }`
-              : require("../../../../public/images/default_ava.png")
+              : defaultAva
           }
         />
         <Text strong style={{ fontSize: "24px" }}>

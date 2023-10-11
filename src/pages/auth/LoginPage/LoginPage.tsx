@@ -1,12 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import "./styles.css";
-import { Button, Input } from "antd";
+import { Button, Input, Typography } from "antd";
+import { useContext, useState } from "react";
+import Lottie from "react-lottie-player";
 import { useMutation } from "react-query";
+import { Link } from "react-router-dom";
 import AuthService from "../../../api/AuthService";
 import { AuthContext } from "../../../context/AuthContext";
-import { Typography } from "antd";
-import { Link } from "react-router-dom";
-import Lottie from "react-lottie-player";
+import "./styles.css";
 
 const { Text } = Typography;
 

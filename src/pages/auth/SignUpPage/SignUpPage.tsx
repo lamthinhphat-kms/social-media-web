@@ -1,10 +1,9 @@
 import { Button, Input, Typography } from "antd";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useMutation } from "react-query";
+import { Link } from "react-router-dom";
 import AuthService from "../../../api/AuthService";
 import { AuthContext } from "../../../context/AuthContext";
-import { useContext } from "react";
-import { Link } from "react-router-dom";
 const { Text } = Typography;
 
 function SignUpPage() {

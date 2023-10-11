@@ -8,3 +8,9 @@
     height: 100%;
     overflow-y: auto;
 }
+
+.grid_post {
+    display: grid;
+    gap: 4px;
+    grid-template-columns: repeat(3,1fr);
+}

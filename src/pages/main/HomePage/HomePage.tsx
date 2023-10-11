@@ -1,12 +1,12 @@
+import { Card, Skeleton } from "antd";
 import { useContext, useEffect, useMemo } from "react";
-import PostTile from "../../../components/PostTile/PostTile";
-import { useQuery, useInfiniteQuery } from "react-query";
-import { AuthContext } from "../../../context/AuthContext";
+import InfiniteScroll from "react-infinite-scroll-component";
+import { useInfiniteQuery, useQuery } from "react-query";
 import FollowingService from "../../../api/FollowingService";
 import PostService from "../../../api/PostService";
-import { ClipLoader } from "react-spinners";
-import InfiniteScroll from "react-infinite-scroll-component";
-import { Card, Skeleton } from "antd";
+import Loading from "../../../components/Loading/Loading";
+import PostTile from "../../../components/PostTile/PostTile";
+import { AuthContext } from "../../../context/AuthContext";
 
 function HomePage() {
   const { user } = useContext(AuthContext);
@@ -59,18 +59,7 @@ function HomePage() {
   }, [postFollowingInfiniteQuery.data]);
 
   if (fetchFollowingListQuery.isLoading) {
-    return (
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ClipLoader loading={true} />
-      </div>
-    );
+    return <Loading />;
   }
   return (
     <div

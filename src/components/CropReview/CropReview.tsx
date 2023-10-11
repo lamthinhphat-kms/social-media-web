@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
-import { canvasPreview } from "../../utils/CanvasPreview";
 import { PixelCrop } from "react-image-crop";
+import { canvasPreview } from "../../utils/CanvasPreview";
 
 type CropPreviewProps = {
   img: HTMLImageElement | null;

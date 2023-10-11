@@ -1,13 +1,13 @@
 import { Button } from "antd";
 import React, { memo, useRef, useState } from "react";
-import { canvasPreview } from "../../utils/CanvasPreview";
-import { useDebounceEffect } from "../../utils/useDebounceEffect";
 import ReactCrop, {
+  PixelCrop,
   centerCrop,
   makeAspectCrop,
   type Crop,
-  PixelCrop,
 } from "react-image-crop";
+import { canvasPreview } from "../../utils/CanvasPreview";
+import { useDebounceEffect } from "../../utils/useDebounceEffect";
 
 type SelectImageProps = {
   previewRef: React.MutableRefObject<HTMLCanvasElement | null>;

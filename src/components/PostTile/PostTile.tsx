@@ -1,15 +1,16 @@
-import { Card, Avatar, Typography } from "antd";
+import { CommentOutlined } from "@ant-design/icons";
+import { Avatar, Card, Typography } from "antd";
 import Meta from "antd/es/card/Meta";
-import { memo, useContext, useEffect, useRef, useState } from "react";
-import { IPost } from "../../models/IPost";
-import { HeartOutlined, CommentOutlined, HeartFilled } from "@ant-design/icons";
-import "./PostTile.css";
+import moment from "moment";
+import { memo, useContext, useState } from "react";
+import Lottie from "react-lottie-player";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import LikeService from "../../api/LikeService";
 import { AuthContext } from "../../context/AuthContext";
+import { IPost } from "../../models/IPost";
+import { defaultAva } from "../../res";
 import CommentModal from "../CommentModal/CommentModal";
-import moment from "moment";
-import Lottie from "react-lottie-player";
+import "./PostTile.css";
 
 const { Text, Paragraph } = Typography;
 
@@ -27,7 +28,7 @@ function PostTile(props: PostTileProps) {
 
   const createInsertLikeMutation = useMutation({
     mutationFn: LikeService.insertikePost,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(["like", post.id, user?.id], {
         exact: true,
       });
@@ -41,7 +42,7 @@ function PostTile(props: PostTileProps) {
 
   const createDeleteLikeMutation = useMutation({
     mutationFn: LikeService.deleteikePost,
-    onSuccess: (data) => {
+    onSuccess: () => {
       queryClient.invalidateQueries(["like", post.id, user?.id], {
         exact: true,
       });
@@ -50,8 +51,6 @@ function PostTile(props: PostTileProps) {
       });
     },
   });
-
-  const isFirstRun = useRef(false);
 
   useQuery({
     queryKey: ["like", post.id, user?.id],
@@ -77,7 +76,7 @@ function PostTile(props: PostTileProps) {
             post.users?.avatar ? (
               <Avatar src={`http://${post.users?.avatar}`} />
             ) : (
-              <Avatar src={require("../../../public/images/default_ava.png")} />
+              <Avatar src={defaultAva} />
             )
           }
           title={post.users?.name}

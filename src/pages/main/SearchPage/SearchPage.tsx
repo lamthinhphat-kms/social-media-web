@@ -1,9 +1,9 @@
-import { memo, useEffect, useState } from "react";
-import "./SearchPage.css";
 import { Input } from "antd";
+import { memo, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import UserService from "../../../api/UserService";
 import ProfileTile from "../../../components/ProfileTile/ProfileTile";
+import "./SearchPage.css";
 
 type SearchPageProps = {
   handleCloseDrawer: () => void;

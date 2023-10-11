@@ -1,13 +1,14 @@
-import React, { useContext, useState } from "react";
-import "./HeaderProfile.css";
 import { Avatar, Button, Typography } from "antd";
-import { useQuery, useMutation } from "react-query";
+import { useContext, useState } from "react";
+import { useMutation, useQuery } from "react-query";
+import { useNavigate } from "react-router-dom";
 import FollowingService from "../../api/FollowingService";
 import PostService from "../../api/PostService";
-import { useNavigate } from "react-router-dom";
-import { IUser } from "../../models/IUser";
 import UserService from "../../api/UserService";
 import { AuthContext } from "../../context/AuthContext";
+import { IUser } from "../../models/IUser";
+import { defaultAva } from "../../res";
+import "./HeaderProfile.css";
 
 const { Text } = Typography;
 
@@ -51,13 +52,13 @@ function HeaderProfile(props: HeaderProfileProps) {
   const fetchIsFollowingQuery = useQuery({
     queryKey: ["following-list", user?.id],
     queryFn: () => FollowingService.fetchFollowingList(user?.id!),
-    onSuccess(data) {},
+    onSuccess() {},
     enabled: isMyProfile ? false : true,
   });
 
   const createHandleFollowMutation = useMutation({
     mutationFn: FollowingService.handleFollow,
-    onSuccess: (data) => {
+    onSuccess: () => {
       fetchIsFollowingQuery.refetch();
       followerCountQuery.refetch();
     },
@@ -107,7 +108,7 @@ function HeaderProfile(props: HeaderProfileProps) {
               ? `http://${profile.avatar}${
                   profile.updated_at ? `?cache=${profile.updated_at}` : ""
                 }`
-              : require("../../../public/images/default_ava.png")
+              : defaultAva
           }
         />
       </div>

@@ -1,8 +1,8 @@
-import React, { memo, useContext } from "react";
-import { IMessage } from "../../models/IMessage";
 import { Avatar, Typography } from "antd";
+import { memo } from "react";
+import { IMessage } from "../../models/IMessage";
 import { IUser } from "../../models/IUser";
-import { AuthContext } from "../../context/AuthContext";
+import { defaultAva } from "../../res";
 import "./ChatTile.css";
 
 type ChatTileProps = {
@@ -31,7 +31,7 @@ function ChatTile(props: ChatTileProps) {
             ? `http://${profile.avatar}${
                 profile.updated_at ? `?cache=${profile.updated_at}` : ""
               }`
-            : require("../../../public/images/default_ava.png")
+            : defaultAva
         }
       />
       <div

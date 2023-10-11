@@ -1,13 +1,14 @@
-import { Modal, Typography, Card, Avatar, Input, Divider } from "antd";
+import { HeartFilled, HeartOutlined, SendOutlined } from "@ant-design/icons";
+import { Avatar, Card, Divider, Input, Modal, Typography } from "antd";
+import moment from "moment";
 import { memo, useContext, useState } from "react";
-import { IPost } from "../../models/IPost";
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import CommentService from "../../api/CommentService";
-import CommentTile from "../CommentTile/CommentTile";
-import { HeartOutlined, HeartFilled, SendOutlined } from "@ant-design/icons";
-import "./CommentModal.css";
-import moment from "moment";
 import { AuthContext } from "../../context/AuthContext";
+import { IPost } from "../../models/IPost";
+import { defaultAva } from "../../res";
+import CommentTile from "../CommentTile/CommentTile";
+import "./CommentModal.css";
 
 const { Text } = Typography;
 
@@ -88,10 +89,7 @@ function CommentModal(props: CommentModalProps) {
                 {post.users?.avatar ? (
                   <Avatar size={"large"} src={`http://${post.users?.avatar}`} />
                 ) : (
-                  <Avatar
-                    size={"large"}
-                    src={require("../../../public/images/default_ava.png")}
-                  />
+                  <Avatar size={"large"} src={defaultAva} />
                 )}
                 <Text
                   style={{

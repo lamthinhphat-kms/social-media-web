@@ -1,10 +1,10 @@
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../context/AuthContext";
-import { ClipLoader } from "react-spinners";
 import { Navigate, Route, Routes } from "react-router-dom";
 import SideNav from "../navigation/SideNav";
 import LoginPage from "../pages/auth/LoginPage/LoginPage";
 import SignUpPage from "../pages/auth/SignUpPage/SignUpPage";
+import Loading from "../components/Loading/Loading";
 
 function RootRoutes() {
   const { user, isLoggedIn } = useContext(AuthContext);
@@ -16,18 +16,7 @@ function RootRoutes() {
   }, []);
 
   if (isLoading) {
-    return (
-      <div
-        style={{
-          flex: 1,
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <ClipLoader loading={isLoading} />
-      </div>
-    );
+    return <Loading />;
   }
 
   return (

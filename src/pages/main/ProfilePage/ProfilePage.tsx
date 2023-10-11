@@ -1,19 +1,15 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import "./ProfilePage.css";
-import { Avatar, Button, Divider, Typography } from "antd";
-import { useInfiniteQuery, useMutation, useQuery } from "react-query";
-import { AuthContext } from "../../../context/AuthContext";
-import UserService from "../../../api/UserService";
-import { IUser } from "../../../models/IUser";
-import PostService from "../../../api/PostService";
-import ImageContainer from "../../../components/ImageContainer/ImageContainer";
-import { useNavigate, useParams } from "react-router-dom";
+import { Divider } from "antd";
+import { useContext, useEffect, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
-import { ClipLoader } from "react-spinners";
-import FollowingService from "../../../api/FollowingService";
+import { useInfiniteQuery } from "react-query";
+import { useParams } from "react-router-dom";
+import PostService from "../../../api/PostService";
 import HeaderProfile from "../../../components/HeaderProfile/HeaderProfile";
+import ImageContainer from "../../../components/ImageContainer/ImageContainer";
+import Loading from "../../../components/Loading/Loading";
+import { AuthContext } from "../../../context/AuthContext";
+import "./ProfilePage.css";
 
-const { Text } = Typography;
 function ProfilePage() {
   const { user } = useContext(AuthContext);
 
@@ -74,27 +70,10 @@ function ProfilePage() {
             dataLength={posts ? posts.length : 0}
             next={() => fetchNextPage()}
             hasMore={hasNextPage ?? true}
-            loader={
-              <div
-                style={{
-                  flex: 1,
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <ClipLoader loading={true} />
-              </div>
-            }
+            loader={<Loading />}
             scrollableTarget="scrollableDiv"
           >
-            <div
-              style={{
-                display: "inline-grid",
-                gap: "4px",
-                gridTemplateColumns: "repeat(3,1fr)",
-              }}
-            >
+            <div className="grid_post">
               {posts &&
                 posts.map((item) => (
                   <ImageContainer key={item.id} post={item} />

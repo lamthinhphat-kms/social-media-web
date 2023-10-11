@@ -1,12 +1,12 @@
 import { Button, Modal } from "antd";
-import "react-image-crop/dist/ReactCrop.css";
-import "./PostModal.css";
-import SelectImage from "../SelectImage/SelectImage";
+import TextArea from "antd/es/input/TextArea";
 import { memo, useCallback, useContext, useRef, useState } from "react";
+import "react-image-crop/dist/ReactCrop.css";
 import { useMutation, useQueryClient } from "react-query";
 import PostService from "../../api/PostService";
 import { AuthContext } from "../../context/AuthContext";
-import TextArea from "antd/es/input/TextArea";
+import SelectImage from "../SelectImage/SelectImage";
+import "./PostModal.css";
 
 type PostModalProps = {
   open: boolean;
