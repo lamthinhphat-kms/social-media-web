@@ -2,39 +2,6 @@
     padding: 0px;
 }
 
-.left_container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    background-color: black;
-    width: 45%;
-}
-
-.right_container{
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-    width: 55%;
-}
-
-.image {
-    width: 100%;
-    height:  100%;
-    object-fit: contain;
-    aspect-ratio: 1;
-  }
-
 .ant-card .ant-card-meta-description {
     color: black
-}
-
-
-.comment_section {
-    display: flex;
-    flex-direction: column;
-}
-
-.input_comment {
-    flex: 1;
 }

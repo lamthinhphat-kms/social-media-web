@@ -1,9 +1,7 @@
-import React, { memo, useEffect, useState } from "react";
-import { Image } from "antd";
+import { memo, useState } from "react";
 import { IPost } from "../../models/IPost";
 import CommentModal from "../CommentModal/CommentModal";
 import { EyeOutlined } from "@ant-design/icons";
-import "./ImageContainer.css";
 type ImageContainerProps = {
   post: IPost;
 };
@@ -17,30 +15,16 @@ function ImageContainer(props: ImageContainerProps) {
         onMouseEnter={() => setShowImage(true)}
         onMouseLeave={() => setShowImage(false)}
         onClick={() => setOpen(true)}
-        style={{
-          cursor: "pointer",
-          position: "relative",
-          overflowY: "hidden",
-        }}
+        className="cursor-pointer relative overflow-y-hidden"
       >
         <img
-          style={{
-            width: "100%",
-            height: "100%",
-            aspectRatio: 1,
-            objectFit: "contain",
-          }}
+          className="w-full h-full aspect-square object-contain"
           src={`http://${post.image_url}`}
         />
 
         {showImage && (
-          <div className="eye_show_image">
-            <EyeOutlined
-              style={{
-                color: "white",
-                fontSize: "24px",
-              }}
-            />
+          <div className="absolute left-0 right-0 top-0 bottom-0 bg-black/[.5] justify-center flex items-center">
+            <EyeOutlined className="text-white text-2xl" />
           </div>
         )}
       </div>

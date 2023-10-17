@@ -6,7 +6,6 @@ import { useMutation, useQueryClient } from "react-query";
 import PostService from "../../api/PostService";
 import { AuthContext } from "../../context/AuthContext";
 import SelectImage from "../SelectImage/SelectImage";
-import "./PostModal.css";
 
 type PostModalProps = {
   open: boolean;
@@ -63,23 +62,9 @@ function PostModal(props: PostModalProps) {
         height: "70vh",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          flex: 1,
-          height: "100%",
-          flexDirection: "row",
-        }}
-      >
+      <div className="flex flex-1 h-full flex-row">
         <SelectImage previewRef={previewCanvasRef} onChangeRef={onRefChange} />
-        <div
-          style={{
-            flex: 1,
-            display: "flex",
-            flexDirection: "column",
-            gap: "8px",
-          }}
-        >
+        <div className="flex-1 flex flex-col gap-2">
           <TextArea
             placeholder="Write a caption"
             autoSize={{
@@ -88,12 +73,7 @@ function PostModal(props: PostModalProps) {
             value={caption}
             onChange={(e) => setCaption(e.target.value)}
           />
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "flex-end",
-            }}
-          >
+          <div className="flex justify-end">
             <Button
               type={haveImage ? "primary" : undefined}
               onClick={getImageCanva}

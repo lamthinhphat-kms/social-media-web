@@ -8,9 +8,8 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import LikeService from "../../api/LikeService";
 import { AuthContext } from "../../context/AuthContext";
 import { IPost } from "../../models/IPost";
-import { defaultAva } from "../../res";
+import { defaultAva, likeAnimation } from "../../res";
 import CommentModal from "../CommentModal/CommentModal";
-import "./PostTile.css";
 
 const { Text, Paragraph } = Typography;
 
@@ -23,7 +22,6 @@ function PostTile(props: PostTileProps) {
   const [isLiked, setIsLiked] = useState(false);
   const { post } = props;
   const [open, setOpen] = useState(false);
-
   const queryClient = useQueryClient();
 
   const createInsertLikeMutation = useMutation({
@@ -65,13 +63,13 @@ function PostTile(props: PostTileProps) {
   return (
     <>
       <Card
-        className="card"
+        className="w-[35vw] mb-3"
         bodyStyle={{
           padding: "0",
         }}
       >
         <Meta
-          className="meta_user_info"
+          className="pt-4 px-4 pb-3"
           avatar={
             post.users?.avatar ? (
               <Avatar src={`http://${post.users?.avatar}`} />
@@ -82,38 +80,11 @@ function PostTile(props: PostTileProps) {
           title={post.users?.name}
         />
         <img
-          style={{
-            aspectRatio: 1,
-            objectFit: "contain",
-            height: "100%",
-            width: "100%",
-          }}
+          className="object-contain aspect-square w-full h-full"
           src={`http://${post.image_url}`}
         />
 
-        <div className="icon_container">
-          {/* {isLiked ? (
-            <HeartFilled
-              className="icon_click liked"
-              onClick={() => {
-                createDeleteLikeMutation.mutate({
-                  postId: post.id,
-                  userId: user?.id!,
-                });
-              }}
-            />
-          ) : (
-            <HeartOutlined
-              className="icon_click"
-              onClick={() => {
-                createInsertLikeMutation.mutate({
-                  postId: post.id,
-                  userId: user?.id!,
-                });
-              }}
-            />
-          )} */}
-
+        <div className="flex flex-row">
           <Lottie
             segments={isLiked ? [0, 80] : [80, 181]}
             onClick={
@@ -133,27 +104,25 @@ function PostTile(props: PostTileProps) {
             }
             play={play}
             onComplete={() => setPlay(false)}
-            style={{
-              width: "70px",
-            }}
-            animationData={require("../../../public/animations/like.json")}
+            className="w-[70px]"
+            animationData={likeAnimation}
             loop={false}
           />
 
           <CommentOutlined
-            className="icon_click"
+            className="text-xl text-gray-400"
             onClick={() => {
               setOpen(true);
             }}
           />
         </div>
 
-        <Text className="like_text">
+        <Text className="px-4 text-gray-500">
           {post.likes_count} likes ∙ {moment(post.created_at).fromNow()}
         </Text>
 
         <Paragraph
-          className="paragraph"
+          className="px-4 py-1"
           ellipsis={{
             rows: 2,
             expandable: true,

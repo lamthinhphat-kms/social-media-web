@@ -8,8 +8,6 @@ import UserService from "../../api/UserService";
 import { AuthContext } from "../../context/AuthContext";
 import { IUser } from "../../models/IUser";
 import { defaultAva } from "../../res";
-import "./HeaderProfile.css";
-
 const { Text } = Typography;
 
 type HeaderProfileProps = {
@@ -99,8 +97,8 @@ function HeaderProfile(props: HeaderProfileProps) {
   };
 
   return (
-    <div className="header_container">
-      <div className="ava_container">
+    <div className="flex flex-row items-center w-full p-3">
+      <div className="flex flex-[2] justify-center">
         <Avatar
           size={{ xs: 54, sm: 62, md: 70, lg: 94, xl: 110, xxl: 130 }}
           src={
@@ -112,15 +110,9 @@ function HeaderProfile(props: HeaderProfileProps) {
           }
         />
       </div>
-      <div className="info_container">
-        <div
-          style={{
-            display: "flex",
-            gap: "8px",
-            alignItems: "center",
-          }}
-        >
-          <Text className="profile_text">{profile?.name}</Text>
+      <div className="flex flex-[5] flex-col gap-3">
+        <div className="flex gap-2 items-center">
+          <Text className="text-2xl">{profile?.name}</Text>
           {!isMyProfile && (
             <>
               <Button type="primary" onClick={handleOnClickMessage}>
@@ -144,21 +136,21 @@ function HeaderProfile(props: HeaderProfileProps) {
             </>
           )}
         </div>
-        <div className="following_statistic">
-          <Text className="profile_text">
-            <Text strong={true} className="profile_text">
+        <div className="flex gap-11">
+          <Text className="text-2xl">
+            <Text strong={true} className="text-2xl">
               {postLengthQuery.data ?? 0}
             </Text>{" "}
             posts
           </Text>
-          <Text className="profile_text">
-            <Text strong={true} className="profile_text">
+          <Text className="text-2xl">
+            <Text strong={true} className="text-2xl">
               {followerCountQuery.data ?? 0}
             </Text>{" "}
             followers
           </Text>
-          <Text className="profile_text">
-            <Text strong={true} className="profile_text">
+          <Text className="text-2xl">
+            <Text strong={true} className="text-2xl">
               {followingCountQuery.data ?? 0}
             </Text>{" "}
             followings

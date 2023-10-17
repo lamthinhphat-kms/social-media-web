@@ -27,22 +27,22 @@ function SignUpPage() {
   });
 
   return (
-    <div className="container">
-      <div className="login_container">
-        <h1 style={{ marginBottom: "12px" }}>Social Media</h1>
+    <div className="flex justify-center items-center flex-col">
+      <div className="flex w-[60%] py-8 items-center flex-col border border-solid border-gray-500 rounded-[15px]">
+        <h1 className="mb-3">Social Media</h1>
         <Input
           placeholder="Email"
           size="large"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="default_component"
+          className="w-[70%] mb-3"
         />
         <Input
           placeholder="Name"
           size="large"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          className="default_component"
+          className="w-[70%] mb-3"
         />
         <Input
           placeholder="Password"
@@ -50,7 +50,7 @@ function SignUpPage() {
           value={password}
           type="password"
           onChange={(e) => setPassword(e.target.value)}
-          className="default_component"
+          className="w-[70%] mb-3"
         />
         {error.length > 0 ? (
           <Text style={{ color: "red" }}>{error}</Text>
@@ -59,7 +59,7 @@ function SignUpPage() {
         )}
         <Button
           type="primary"
-          className="default_component"
+          className="w-[70%] mb-3"
           loading={createSignUpMutation.isLoading}
           onClick={() => {
             createSignUpMutation.mutate({

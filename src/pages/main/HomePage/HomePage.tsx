@@ -1,5 +1,5 @@
 import { Card, Skeleton } from "antd";
-import { useContext, useEffect, useMemo } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery, useQuery } from "react-query";
 import FollowingService from "../../../api/FollowingService";
@@ -7,6 +7,8 @@ import PostService from "../../../api/PostService";
 import Loading from "../../../components/Loading/Loading";
 import PostTile from "../../../components/PostTile/PostTile";
 import { AuthContext } from "../../../context/AuthContext";
+import supabase from "../../../supabase/supabaseClient";
+import { IPost } from "../../../models/IPost";
 
 function HomePage() {
   const { user } = useContext(AuthContext);
@@ -36,6 +38,27 @@ function HomePage() {
   );
 
   useEffect(() => {
+    const realtime = supabase
+      .channel("testing")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "posts",
+        },
+        (payload) => {
+          postFollowingInfiniteQuery.refetch();
+        }
+      )
+      .subscribe();
+
+    return () => {
+      realtime.unsubscribe();
+    };
+  }, []);
+
+  useEffect(() => {
     const root = document.getElementById("scrollableDiv");
     if (root) {
       if (
@@ -63,12 +86,7 @@ function HomePage() {
   }
   return (
     <div
-      style={{
-        height: "100%",
-        overflowY: "auto",
-        display: "flex",
-        justifyContent: "center",
-      }}
+      className="flex overflow-y-auto h-[100%] justify-center"
       id="scrollableDiv"
     >
       <InfiniteScroll
@@ -77,40 +95,22 @@ function HomePage() {
         hasMore={postFollowingInfiniteQuery.hasNextPage ?? true}
         loader={
           <Card
-            style={{
-              marginBottom: "12px",
-            }}
+            className="mb-3"
             bodyStyle={{
               padding: "0",
             }}
           >
-            <div
-              style={{
-                padding: "16px 16px 12px",
-              }}
-            >
+            <div className="px-4 pt-4 pb-3">
               <Skeleton avatar paragraph={{ rows: 0 }} active />
             </div>
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: "8px",
-              }}
-            >
+            <div className="flex justify-center mb-2">
               <Skeleton.Image
                 style={{ width: "35vw", height: "40vh" }}
                 active
               />
             </div>
 
-            <Skeleton
-              style={{
-                padding: "8px 16px",
-              }}
-              paragraph={{ rows: 2 }}
-              active
-            />
+            <Skeleton className="py-2 px-4" paragraph={{ rows: 2 }} active />
           </Card>
         }
         scrollableTarget="scrollableDiv"

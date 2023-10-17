@@ -52,116 +52,75 @@ function CommentModal(props: CommentModalProps) {
       centered={true}
       afterClose={props.handleCancel}
       closeIcon={false}
-      width={"60vw"}
+      width={"80vw"}
       bodyStyle={{
-        height: "65vh",
+        height: "80vh",
       }}
     >
-      <div
-        style={{
-          height: "100%",
-          width: "100%",
-          display: "flex",
-          flexDirection: "row",
-        }}
-      >
-        <div className="left_container">
-          <img className="image" src={`http://${post.image_url}`} />
+      <div className="h-full w-full flex flex-row">
+        <div className="flex items-center justify-center h-full bg-black w-[45%]">
+          <img
+            className="w-full h-full object-contain aspect-square"
+            src={`http://${post.image_url}`}
+          />
         </div>
-        <div className="right_container">
-          <div
-            style={{
-              flex: 1,
-              overflowY: "scroll",
-            }}
-          >
+        <div className="max-h-full flex flex-col w-[55%]">
+          <div className="flex-1 overflow-y-scroll">
             <Card
-              style={{
-                height: "100%",
-                borderRadius: "0px",
-                borderWidth: "0",
-              }}
+              className="h-full rounded-none border-0"
               bodyStyle={{
                 padding: "0px",
               }}
             >
-              <div className="comment_container">
+              <div className="py-2 px-4 flex flex-row gap-2">
                 {post.users?.avatar ? (
                   <Avatar size={"large"} src={`http://${post.users?.avatar}`} />
                 ) : (
                   <Avatar size={"large"} src={defaultAva} />
                 )}
-                <Text
-                  style={{
-                    flex: 1,
-                    fontSize: "18px",
-                  }}
-                >
+                <Text className="flex-1 text-lg">
                   <Text strong={true}>{post.users?.name}</Text>{" "}
                   <Text>{post.caption}</Text>
                 </Text>
               </div>
-              <Divider
-                style={{
-                  margin: "4px",
-                }}
-              />
+              <Divider className="m-1" />
               {fetchCommentsQuery.data?.map((item) => {
                 return <CommentTile key={item.id} comment={item} />;
               })}
             </Card>
           </div>
-          <div className="comment_section">
-            <Divider
-              style={{
-                margin: "0px",
-              }}
-            />
-            <div
-              style={{
-                padding: "8px 16px",
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
-              }}
-            >
+          <div className="flex flex-col">
+            <Divider className="m-0" />
+            <div className="py-2 px-4 flex flex-row items-center">
               {!props.isMyPost ? (
                 props.isLiked ? (
                   <HeartFilled
-                    className="icon_click liked"
+                    className="text-xl text-red-500"
                     onClick={props.onUnlike}
                   />
                 ) : (
                   <HeartOutlined
-                    className="icon_click"
+                    className="text-xl text-gray-500"
                     onClick={props.onLike}
                   />
                 )
               ) : undefined}
 
-              <Text className="like_text">
+              <Text className="px-4">
                 {post.likes_count} likes ∙ {moment(post.created_at).fromNow()}
               </Text>
             </div>
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "row",
-                gap: "8px",
-                margin: "8px",
-              }}
-            >
+            <div className="flex flex-row gap-2 m-2">
               <Input
-                className="input_comment"
+                className="flex-1"
                 placeholder="Add a comment"
                 value={comment}
                 onChange={(e) => setComment(e.target.value)}
               />
               <SendOutlined
-                style={{
-                  fontSize: "14px",
-                  color: comment.length !== 0 ? "blue" : "gray",
-                }}
+                className={`text-sm ${
+                  comment.length !== 0 ? "text-blue-500" : "text-gray-500"
+                }`}
                 onClick={
                   comment.length !== 0
                     ? () => {

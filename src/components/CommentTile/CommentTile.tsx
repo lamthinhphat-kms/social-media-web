@@ -15,11 +15,9 @@ function CommentTile(props: CommentTileProps) {
   const { users } = comment;
   return (
     <Comment
-      style={{
-        padding: "0px 12px",
-      }}
+      className="px-3"
       author={
-        <Text strong style={{ color: "black" }}>
+        <Text strong className="text-black">
           {users.name}
         </Text>
       }
@@ -32,7 +30,7 @@ function CommentTile(props: CommentTileProps) {
       }
       content={<Text>{comment.text}</Text>}
       datetime={
-        <Text style={{ color: "gray" }}>
+        <Text className="text-gray-400">
           {moment(comment.created_at).fromNow()}
         </Text>
       }

@@ -3,7 +3,6 @@ import { memo, useEffect, useState } from "react";
 import { useMutation } from "react-query";
 import UserService from "../../../api/UserService";
 import ProfileTile from "../../../components/ProfileTile/ProfileTile";
-import "./SearchPage.css";
 
 type SearchPageProps = {
   handleCloseDrawer: () => void;
@@ -23,9 +22,9 @@ function SearchPage(props: SearchPageProps) {
   }, [search]);
 
   return (
-    <div className="search_container">
+    <div className="flex justify-center flex-col py-6 flex-1 gap-2">
       <Input
-        className="input_search_container"
+        className="mx-6 w-auto"
         placeholder="Search"
         size="large"
         allowClear={true}

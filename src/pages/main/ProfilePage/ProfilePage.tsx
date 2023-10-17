@@ -8,7 +8,6 @@ import HeaderProfile from "../../../components/HeaderProfile/HeaderProfile";
 import ImageContainer from "../../../components/ImageContainer/ImageContainer";
 import Loading from "../../../components/Loading/Loading";
 import { AuthContext } from "../../../context/AuthContext";
-import "./ProfilePage.css";
 
 function ProfilePage() {
   const { user } = useContext(AuthContext);
@@ -62,7 +61,10 @@ function ProfilePage() {
 
   return (
     <>
-      <div className="profile_container" id="scrollableDiv">
+      <div
+        className="flex p-3 items-center flex-col w-full h-full overflow-y-auto"
+        id="scrollableDiv"
+      >
         <HeaderProfile profileId={profileId} isMyProfile={isMyProfile} />
         <Divider />
         <div id="scrollableDiv">
@@ -73,7 +75,7 @@ function ProfilePage() {
             loader={<Loading />}
             scrollableTarget="scrollableDiv"
           >
-            <div className="grid_post">
+            <div className="grid gap-1 grid-cols-3">
               {posts &&
                 posts.map((item) => (
                   <ImageContainer key={item.id} post={item} />

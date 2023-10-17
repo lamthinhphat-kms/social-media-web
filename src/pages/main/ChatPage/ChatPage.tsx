@@ -11,7 +11,6 @@ import { IUser } from "../../../models/IUser";
 import { defaultAva } from "../../../res";
 import AlwaysScrollToBottom from "../../../utils/AlwaysScrollToBottom";
 import { socket } from "../../../utils/Socket";
-import "./ChatPage.css";
 import.meta.env;
 
 const { Text } = Typography;
@@ -62,8 +61,8 @@ function ChatPage() {
   }, []);
 
   return (
-    <div className="chat_container">
-      <div className="header_chat">
+    <div className="flex flex-col w-full h-full p-3">
+      <div className="flex items-center gap-2 pb-2 border-solid border-0 border-b-[1px] border-gray-500">
         <Avatar
           size={"large"}
           src={
@@ -76,11 +75,11 @@ function ChatPage() {
               : defaultAva
           }
         />
-        <Text strong style={{ fontSize: "24px" }}>
+        <Text strong className="text-2xl">
           {currentProfile.name}
         </Text>
       </div>
-      <div style={{ flex: 1, overflow: "scroll" }}>
+      <div className="flex-1 overflow-scroll">
         {fetchUserQuery.isLoading ? (
           <></>
         ) : (
@@ -101,27 +100,17 @@ function ChatPage() {
           </>
         )}
       </div>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "row",
-          gap: "8px",
-        }}
-      >
+      <div className="flex flex-row gap-2">
         <Input
           placeholder="Enter your message"
           value={chat}
-          style={{
-            fontSize: "17px",
-            borderRadius: "15px",
-          }}
+          className="text-[17px] rounded-[15px]"
           onChange={(e) => setChat(e.target.value)}
         />
         <SendOutlined
-          style={{
-            fontSize: "20px",
-            color: chat.length !== 0 ? "blue" : "gray",
-          }}
+          className={`text-[20px] ${
+            chat.length !== 0 ? "text-blue-500" : "text-gray-500"
+          }`}
           onClick={
             chat.length !== 0
               ? () => {

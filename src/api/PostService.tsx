@@ -96,7 +96,6 @@ async function fetchPostByRange({
   page: number;
 }): Promise<IPost[]> {
   try {
-    console.log(page);
     const { data, error } = await supabase
       .from("posts")
       .select("*,users(name,avatar)")

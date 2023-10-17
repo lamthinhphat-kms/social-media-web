@@ -4,14 +4,7 @@ type LoadingProp = {
 };
 function Loading({ isLoading = true }: LoadingProp) {
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
+    <div className="flex-1 flex justify-center items-center">
       <ClipLoader loading={isLoading} />
     </div>
   );

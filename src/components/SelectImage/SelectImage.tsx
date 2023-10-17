@@ -74,46 +74,18 @@ function SelectImage(props: SelectImageProps) {
   };
 
   return (
-    <div
-      style={{
-        flex: 1,
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        flexDirection: "column",
-        height: "100%",
-      }}
-    >
+    <div className="flex flex-1 justify-center items-center flex-col h-full">
       {!image && (
         <input type="file" accept="image/*" onChange={onImageChange} />
       )}
       {image && (
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            flex: 1,
-            width: "100%",
-            height: "100%",
-          }}
-        >
-          <div
-            style={{
-              position: "relative",
-              width: "100%",
-              height: "100%",
-            }}
-          >
-            <div className="image_crop_select">
+        <div className="flex flex-col flex-1 justify-center items-center w-full h-full">
+          <div className="relative w-full h-full">
+            <div className="absolute left-0 right-0 top-0 bottom-0 flex justify-center items-center">
               <ReactCrop
-                style={{
-                  visibility: !completedPreviewCrop ? "visible" : "hidden",
-                  position: "absolute",
-                  minWidth: "100%",
-                  maxHeight: "90%",
-                }}
+                className={`absolute min-w-full max-h-[90%] ${
+                  !completedPreviewCrop ? "visible" : "invisible"
+                }`}
                 keepSelection={true}
                 crop={crop}
                 aspect={1}
@@ -123,7 +95,7 @@ function SelectImage(props: SelectImageProps) {
                 }}
               >
                 <img
-                  className="image_crop_container"
+                  className="w-full h-full object-contain"
                   src={image}
                   onLoad={onImageLoaded}
                   ref={imageRef}
@@ -132,14 +104,10 @@ function SelectImage(props: SelectImageProps) {
             </div>
 
             {completedPreviewCrop && (
-              <div className="image_crop_select">
+              <div className="absolute left-0 right-0 top-0 bottom-0 flex justify-center items-center">
                 <canvas
                   ref={props.onChangeRef}
-                  style={{
-                    border: "1px solid black",
-                    objectFit: "contain",
-                    width: "100%",
-                  }}
+                  className="border-solid border-black border-[1px] object-contain w-full"
                 />
               </div>
             )}

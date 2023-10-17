@@ -5,7 +5,7 @@ import { useMutation } from "react-query";
 import { Link } from "react-router-dom";
 import AuthService from "../../../api/AuthService";
 import { AuthContext } from "../../../context/AuthContext";
-import "./styles.css";
+import { socialMedia } from "../../../res";
 
 const { Text } = Typography;
 
@@ -23,23 +23,16 @@ function LoginPage() {
   });
 
   return (
-    <div className="container">
-      <Lottie
-        loop
-        play
-        animationData={require("../../../../public/animations/social-media.json")}
-        style={{
-          width: "40%",
-        }}
-      />
-      <div className="login_container">
-        <h1 style={{ marginBottom: "12px" }}>Social Media</h1>
+    <div className="flex justify-center items-center flex-col">
+      <Lottie loop play animationData={socialMedia} className=" w-[40%]" />
+      <div className="flex w-[60%] py-8 items-center flex-col border border-solid border-gray-500 rounded-[15px]">
+        <h1 className="mb-3">Social Media</h1>
         <Input
           placeholder="Email"
           size="large"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="default_component"
+          className="w-[70%] mb-3"
         />
         <Input
           placeholder="Password"
@@ -47,11 +40,11 @@ function LoginPage() {
           value={password}
           type="password"
           onChange={(e) => setPassword(e.target.value)}
-          className="default_component"
+          className="w-[70%] mb-3"
         />
         <Button
           type="primary"
-          className="default_component"
+          className="w-[70%] mb-3"
           loading={createSignInMutation.isLoading}
           onClick={() => {
             createSignInMutation.mutate({

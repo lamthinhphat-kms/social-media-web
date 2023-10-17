@@ -3,7 +3,6 @@ import { memo } from "react";
 import { IMessage } from "../../models/IMessage";
 import { IUser } from "../../models/IUser";
 import { defaultAva } from "../../res";
-import "./ChatTile.css";
 
 type ChatTileProps = {
   chat: IMessage;
@@ -17,12 +16,9 @@ function ChatTile(props: ChatTileProps) {
   const { chat, profile, userId } = props;
   return (
     <div
-      style={{
-        display: "flex",
-        margin: "12px 0px",
-        gap: "8px",
-        flexDirection: userId === profile.id ? "row-reverse" : "row",
-      }}
+      className={`flex my-3 gap-2 ${
+        userId === profile.id ? "flex-row-reverse" : "flex-row"
+      }`}
     >
       <Avatar
         size={"large"}
@@ -35,17 +31,14 @@ function ChatTile(props: ChatTileProps) {
         }
       />
       <div
-        className="bubble_chat"
-        style={{
-          backgroundColor:
-            userId === profile.id ? "rgb(30,144,255)" : "rgba(0, 0, 0, 0.1)",
-        }}
+        className={`px-4 py-2 rounded-[15px] max-w-[80%] ${
+          userId === profile.id ? "bg-chatBlue" : "bg-black/[.1]"
+        }`}
       >
         <Text
-          style={{
-            fontSize: "17px",
-            color: userId === profile.id ? "white" : "black",
-          }}
+          className={`text-[17px] ${
+            userId === profile.id ? "text-white" : "text-black"
+          }`}
         >
           {chat.message}
         </Text>

@@ -3,7 +3,6 @@ import { memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { IUser } from "../../models/IUser";
 import { defaultAva } from "../../res";
-import "./ProfileTile.css";
 
 type ProfileTileProps = {
   user: IUser;
@@ -17,7 +16,7 @@ function ProfileTile(props: ProfileTileProps) {
   const navigate = useNavigate();
   return (
     <div
-      className="profile_tile_container"
+      className="flex flex-row gap-2 items-center px-6 py-3 cursor-pointer hover:bg-black/[.1]"
       onClick={() => {
         navigate(`/profile/${user.id}`);
         props.handleOnCloseDrawer();
