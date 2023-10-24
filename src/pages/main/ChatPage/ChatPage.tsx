@@ -1,6 +1,6 @@
-import { SendOutlined } from "@ant-design/icons";
+import { SendOutlined, PhoneOutlined } from "@ant-design/icons";
 import { Avatar, Input, Typography } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
 import { useLocation, useParams } from "react-router-dom";
 import UserService from "../../../api/UserService";
@@ -60,6 +60,10 @@ function ChatPage() {
     };
   }, []);
 
+  const openMeeting = useCallback(() => {
+    window.open(`http://localhost:5173/meeting/${roomId}`, "_blank");
+  }, []);
+
   return (
     <div className="flex flex-col w-full h-full p-3">
       <div className="flex items-center gap-2 pb-2 border-solid border-0 border-b-[1px] border-gray-500">
@@ -75,9 +79,10 @@ function ChatPage() {
               : defaultAva
           }
         />
-        <Text strong className="text-2xl">
+        <Text strong className=" flex-1 text-2xl">
           {currentProfile.name}
         </Text>
+        <PhoneOutlined className="text-xl" onClick={openMeeting} />
       </div>
       <div className="flex-1 overflow-scroll">
         {fetchUserQuery.isLoading ? (
