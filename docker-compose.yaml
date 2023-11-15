@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  vite-social-media:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_BASE_URL: http://172.25.248.11:8002
+      VITE_SOCKET_URL: http://172.25.248.11:8001

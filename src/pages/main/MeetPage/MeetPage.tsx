@@ -51,10 +51,10 @@ function MeetPage() {
       onApiReady={(externalApi) => {
         // here you can attach custom event listeners to the Jitsi Meet External API
         // you can also store it locally to execute commands
-        // externalApi.addListener(
-        //   "videoConferenceLeft",
-        //   handleVideoConferenceLeft
-        // );
+        externalApi.addListener(
+          "videoConferenceLeft",
+          handleVideoConferenceLeft
+        );
       }}
     />
   );
