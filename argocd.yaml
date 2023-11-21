@@ -2,7 +2,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: myapp-argocd-application
+  name: social-mdeia-web-argocd-application
   namespace: argocd
 spec:
   project: default
