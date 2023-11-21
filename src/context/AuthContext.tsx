@@ -31,10 +31,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   }, []);
   const isLoggedIn = async () => {
     try {
-      const { data, error } = await supabase.auth.getUser();
-      if (error) {
-        throw error;
-      }
+      const { data } = await supabase.auth.getUser();
       if (data.user) {
         setUser(data.user!);
         setIsLoading(false);
