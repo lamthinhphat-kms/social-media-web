@@ -7,7 +7,7 @@ const supabase = createClient(
     auth: {
       storage: localStorage,
       autoRefreshToken: true,
-      persistSession: true,
+      persistSession: false,
       detectSessionInUrl: false,
     },
   }
