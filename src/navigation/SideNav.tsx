@@ -6,11 +6,10 @@ import {
   LogoutOutlined,
   HomeOutlined,
 } from "@ant-design/icons";
-import { Drawer, Layout, Menu } from "antd";
+import { Layout, Menu } from "antd";
 import { useNavigate } from "react-router-dom";
 import MainRoutes from "../routes/MainRoutes";
 import { AuthContext } from "../context/AuthContext";
-import SearchPage from "../pages/main/SearchPage/SearchPage";
 import PostModal from "../components/PostModal/PostModal";
 import SearchDrawer from "../components/SearchDrawer/SearchDrawer";
 

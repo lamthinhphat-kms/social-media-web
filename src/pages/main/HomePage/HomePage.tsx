@@ -1,5 +1,5 @@
 import { Card, Skeleton } from "antd";
-import { useContext, useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { useInfiniteQuery, useQuery } from "react-query";
 import FollowingService from "../../../api/FollowingService";
@@ -8,7 +8,6 @@ import Loading from "../../../components/Loading/Loading";
 import PostTile from "../../../components/PostTile/PostTile";
 import { AuthContext } from "../../../context/AuthContext";
 import supabase from "../../../supabase/supabaseClient";
-import { IPost } from "../../../models/IPost";
 
 function HomePage() {
   const { user } = useContext(AuthContext);
@@ -47,7 +46,7 @@ function HomePage() {
           schema: "public",
           table: "posts",
         },
-        (payload) => {
+        (_) => {
           postFollowingInfiniteQuery.refetch();
         }
       )

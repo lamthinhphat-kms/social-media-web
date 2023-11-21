@@ -1,19 +1,19 @@
 import { JitsiMeeting } from "@jitsi/react-sdk";
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import { useParams } from "react-router-dom";
 import { IUser } from "../../../models/IUser";
 import { useQuery } from "react-query";
 import { AuthContext } from "../../../context/AuthContext";
 import UserService from "../../../api/UserService";
 import Loading from "../../../components/Loading/Loading";
-import { IJitsiMeetExternalApi } from "@jitsi/react-sdk/lib/types";
+// import { IJitsiMeetExternalApi } from "@jitsi/react-sdk/lib/types";
 
 function MeetPage() {
   const { roomId } = useParams();
   const { user } = useContext(AuthContext);
 
   const [userInfo, setUserInfo] = useState<IUser | undefined>(undefined);
-  var api: IJitsiMeetExternalApi | undefined = undefined;
+  // var api: IJitsiMeetExternalApi | undefined = undefined;
 
   useQuery({
     queryKey: ["user", user?.id],

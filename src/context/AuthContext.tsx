@@ -14,7 +14,7 @@ export const AuthContext = createContext<AuthContextProps>({
   user: null,
   isLoading: true,
   logout: () => {},
-  setUser: (user) => {},
+  setUser: () => {},
   isLoggedIn: async () => {},
 });
 
@@ -32,6 +32,9 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const isLoggedIn = async () => {
     try {
       const { data, error } = await supabase.auth.getUser();
+      if (error) {
+        throw error;
+      }
       if (data.user) {
         setUser(data.user!);
         setIsLoading(false);

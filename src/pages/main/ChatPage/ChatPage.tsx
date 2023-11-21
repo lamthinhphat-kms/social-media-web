@@ -11,7 +11,6 @@ import { IUser } from "../../../models/IUser";
 import { defaultAva } from "../../../res";
 import AlwaysScrollToBottom from "../../../utils/AlwaysScrollToBottom";
 import { socket } from "../../../utils/Socket";
-import.meta.env;
 
 const { Text } = Typography;
 
@@ -26,7 +25,7 @@ function ChatPage() {
   const fetchUserQuery = useQuery({
     queryKey: ["user", user?.id],
     queryFn: () => UserService.fetchUserProfile({ userId: user?.id! }),
-    onSuccess: (data) => {},
+    onSuccess: () => {},
   });
 
   useEffect(() => {
